@@ -13,5 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Placeholder check
-        run: ls -la
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14.5"
+      - name: Run tests
+        run: python -m unittest discover -s tests -t .
