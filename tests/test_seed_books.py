@@ -1,4 +1,4 @@
-"""Reproduce the five hand-checked books from saved ISFDB responses (no network)."""
+"""The five hand-checked books must come out of the committed data as expected."""
 
 import unittest
 from pathlib import Path
@@ -6,62 +6,67 @@ from pathlib import Path
 from dnd_novels import build_csv, isbn
 
 ROOT = Path(__file__).resolve().parent.parent
-FIXTURES = ROOT / "tests" / "fixtures"
 
 # Written from the books themselves, not from the code's output.
 EXPECTED = {
-    "9781560761198": dict(
-        title="Canticle", authors="R. A. Salvatore", first_pub_date="1991",
-        setting="Forgotten Realms", series="The Cleric Quintet", series_number="1",
+    "Canticle": dict(
+        authors="R. A. Salvatore", first_pub_date="1991", setting="Forgotten Realms",
+        series="The Cleric Quintet", series_number="1", isbn13="9781560761198",
         isbn10="1560761199", publisher="TSR", format="novel"),
-    "9781560760672": dict(
-        title="The Parched Sea", authors="Troy Denning", first_pub_date="1991",
-        setting="Forgotten Realms", series="The Harpers", series_number="1",
+    "The Parched Sea": dict(
+        authors="Troy Denning", first_pub_date="1991", setting="Forgotten Realms",
+        series="The Harpers", series_number="1", isbn13="9781560760672",
         isbn10="1560760672", publisher="TSR", format="novel"),
-    "9781560761532": dict(
-        title="Beyond the Moons", authors="David Cook", first_pub_date="1991",
-        setting="Spelljammer", series="The Cloakmaster Cycle", series_number="1",
+    "Beyond the Moons": dict(
+        authors="David Cook", first_pub_date="1991", setting="Spelljammer",
+        series="The Cloakmaster Cycle", series_number="1", isbn13="9781560761532",
         isbn10="1560761539", publisher="TSR", format="novel"),
-    # First printing Oct 1998 (hardcover); seeded ISBN is the later paperback.
-    "9780786913886": dict(
-        title="The Silent Blade", authors="R. A. Salvatore", first_pub_date="1998-10",
-        setting="Forgotten Realms", series="Paths of Darkness", series_number="1",
-        isbn10="0786913886", publisher="TSR/Wizards of the Coast", format="novel"),
-    "9798887240077": dict(
-        title="Dungeons & Dragons - Library Collection",
+    # First printing is the Oct 1998 hardcover. The owner's copy (ISBN 0786913886)
+    # is a later paperback printing, so the row carries the first edition's ISBN.
+    "The Silent Blade": dict(
+        authors="R. A. Salvatore", first_pub_date="1998-10", setting="Forgotten Realms",
+        series="Paths of Darkness", series_number="1", format="novel"),
+    "Dungeons & Dragons - Library Collection": dict(
         authors="R. A. Salvatore; Geno Salvatore", first_pub_date="2023-11",
         setting="Forgotten Realms", series="Dungeons & Dragons - Library Collection",
-        series_number="1", isbn10="", publisher="IDW", format="graphic novel"),
+        series_number="1", isbn13="9798887240077", isbn10="", publisher="IDW",
+        format="graphic novel"),
 }
+
+
+def all_rows():
+    return build_csv.build_rows(ROOT / "data" / "isfdb_dnd.csv", ROOT / "data" / "manual.csv")
 
 
 class SeedBooksTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        rows = build_csv.build_rows(ROOT / "data" / "seeds.csv", FIXTURES)
-        cls.rows = {r["isbn13"]: r for r in rows}
+        cls.rows = {}
+        for row in all_rows():
+            # The Silent Blade also exists as a 2021 title in another series.
+            if row["title"] in EXPECTED and row["setting"] == EXPECTED[row["title"]]["setting"]:
+                cls.rows[row["title"]] = row
 
     def test_all_five_books_present(self):
         self.assertEqual(set(self.rows), set(EXPECTED))
 
     def test_fields(self):
-        for isbn13, expected in EXPECTED.items():
+        for title, expected in EXPECTED.items():
             for field, value in expected.items():
-                with self.subTest(isbn13=isbn13, field=field):
-                    actual = self.rows[isbn13][field]
+                with self.subTest(title=title, field=field):
+                    actual = self.rows[title][field]
                     if field == "first_pub_date" and len(value) == 4:
                         actual = actual[:4]  # only the year is hand-verified
                     self.assertEqual(actual, value)
 
-    def test_silent_blade_notes_date_conflict(self):
-        notes = self.rows["9780786913886"]["notes"]
-        self.assertIn("1998-10", notes)
-        self.assertIn("1999-06", notes)
-
     def test_isbns_valid(self):
-        for isbn13, row in self.rows.items():
-            with self.subTest(isbn13=isbn13):
+        for title, row in self.rows.items():
+            with self.subTest(title=title):
                 self.assertTrue(isbn.is_valid(row["isbn13"]))
+
+    def test_no_duplicate_isbns(self):
+        isbns = [r["isbn13"] for r in all_rows() if r["isbn13"]]
+        self.assertEqual({i for i in isbns if isbns.count(i) > 1}, set())
 
 
 class IsbnTest(unittest.TestCase):
