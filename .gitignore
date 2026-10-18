@@ -225,4 +225,3 @@ NOTES.md
 
 # Local ISFDB response cache
 cache/
-__pycache__/
