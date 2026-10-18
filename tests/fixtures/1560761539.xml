@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<ISFDB>
+  <Records>2</Records>
+  <Publications>
+    <Publication>
+      <Record>31653</Record>
+      <Title>Beyond the Moons</Title>
+      <Authors>
+        <Author>David Cook</Author>
+      </Authors>
+      <Year>1991-07-00</Year>
+      <Isbn>1560761539</Isbn>
+      <Publisher>TSR</Publisher>
+      <Price>$4.95</Price>
+      <Pages>311</Pages>
+      <Binding>pb</Binding>
+      <Type>NOVEL</Type>
+      <Tag>BKTG00232</Tag>
+      <Image>https://www.isfdb.org/wiki/images/4/4e/BKTG00232.jpg</Image>
+      <CoverArtists>
+        <Artist>Jeff Easley</Artist>
+      </CoverArtists>
+      <Note>&lt;ul&gt;&lt;li&gt;First Printing: July 1991
+&lt;li&gt;9 8 7 6 5 4 3 2 1
+&lt;li&gt;Map uncredited &amp; unsigned
+&lt;li&gt;U.K. price: �3.99&lt;/ul&gt;</Note>
+    <External_IDs>
+      <External_ID>
+          <IDtype>10</IDtype>
+          <IDtypeName>LCCN</IDtypeName>
+          <IDvalue>90-71504</IDvalue>
+      </External_ID>
+      <External_ID>
+          <IDtype>12</IDtype>
+          <IDtypeName>OCLC/WorldCat</IDtypeName>
+          <IDvalue>26301307</IDvalue>
+      </External_ID>
+      <External_ID>
+          <IDtype>21</IDtype>
+          <IDtypeName>Reginald-3</IDtypeName>
+          <IDvalue>20425</IDvalue>
+      </External_ID>
+    </External_IDs>
+
+    </Publication>
+    <Publication>
+      <Record>282281</Record>
+      <Title>Beyond the Moons</Title>
+      <Authors>
+        <Author>David Cook</Author>
+      </Authors>
+      <Year>date unknown</Year>
+      <Isbn>1560761539</Isbn>
+      <Publisher>TSR</Publisher>
+      <Price>$4.95</Price>
+      <Pages>311</Pages>
+      <Binding>pb</Binding>
+      <Type>NOVEL</Type>
+      <Tag>BNDTHMNSCZ0000</Tag>
+      <Image>https://m.media-amazon.com/images/G/01/ciu/1a/a4/e6e2b2c008a01795beee5010.L.jpg</Image>
+      <CoverArtists>
+        <Artist>Jeff Easley</Artist>
+      </CoverArtists>
+      <Note>&lt;ul&gt;&lt;li&gt;Second printing by number line.
+&lt;li&gt;No printing date in book.
+&lt;li&gt;Copyright � 1991 TSR, Inc.
+&lt;li&gt;Cover art by Jeff Easley.
+&lt;li&gt;First printing July 1991.
+&lt;li&gt;U.K. pricing �3.99.&lt;/ul&gt;</Note>
+    <External_IDs>
+      <External_ID>
+          <IDtype>10</IDtype>
+          <IDtypeName>LCCN</IDtypeName>
+          <IDvalue>90-71504</IDvalue>
+      </External_ID>
+    </External_IDs>
+
+    </Publication>
+  </Publications>
+</ISFDB>
